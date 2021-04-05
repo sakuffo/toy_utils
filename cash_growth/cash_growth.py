@@ -1,21 +1,32 @@
+# %%
 import sys
+import json
 
+# %%
 def grow_cash(st_amt, gw_pct, num_rota):
   computed_amount = st_amt
-  for x in range(num_rota):
-    computed_amount = computed_amount * gw_pct
+  return computed_amount * gw_pct**num_rota
 
-  return computed_amount
-
+# %%
 def growth_predictions(args):
-  starting_amount = int(args[1])
-  growth_percentage = float(args[2])
-  num_of_rotations = int(args[3])
+  starting_amount = int(args["st_amt"])
+  growth_percentage = float(args["gw_pct"])
+  num_of_rotations = int(args["num_rota"])
 
   return grow_cash(starting_amount, growth_percentage, num_of_rotations)
 
-result = growth_predictions(sys.argv)
+# %%
+
+def load_file(json_file='./test.json'):
+  with open(json_file) as f:
+    data=json.loads(f.read())
+    f.close()
+    return data
+
+# %%
+
+data = load_file()
+result = growth_predictions(data)
 print(result)
 
-
-
+# %%
